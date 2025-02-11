@@ -1,13 +1,13 @@
 package com.nightly.dto;
 
-import java.time.LocalDateTime;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -35,11 +35,11 @@ public class SignupRequestDto {
   private String phone;
 
   private String profileImage;
-  private String role;
+  private String role = "ROLE_USER";
   private LocalDateTime signupTime;
   private LocalDateTime updateTime;
   private int followingCount;
   private int followerCount;
-  private String status;
+  private String status = "ACTIVE";
   private String content;
 }

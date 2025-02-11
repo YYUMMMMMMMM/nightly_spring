@@ -1,17 +1,11 @@
 package com.nightly.entity;
 
-import java.time.LocalDateTime;
-
 import com.nightly.dto.SignupRequestDto;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,7 +20,6 @@ public class User {
   private String name;
   private String nickname;
   private String phone;
-
   private String profileImage;
   private String role;
   private LocalDateTime signupTime;
@@ -34,8 +27,6 @@ public class User {
   private int followingCount;
   private int followerCount;
   private String status;
-
-  @Column(columnDefinition = "text")
   private String content;
 
   // toEntity
@@ -53,7 +44,7 @@ public class User {
         .followingCount(dto.getFollowingCount())
         .followerCount(dto.getFollowerCount())
         .status(dto.getStatus())
-       .content(dto.getContent())
+        .content(dto.getContent())
         .build();
   }
 }

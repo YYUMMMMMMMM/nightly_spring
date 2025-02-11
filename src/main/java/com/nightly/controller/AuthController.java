@@ -1,7 +1,9 @@
 package com.nightly.controller;
 
+import com.nightly.dto.SigninRequestDto;
 import com.nightly.dto.SignupRequestDto;
 import com.nightly.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,5 +22,11 @@ public class AuthController {
   public ResponseEntity<?> signUp(@RequestBody SignupRequestDto dto) {
     ResponseEntity<?> response = authService.signUp(dto);
     return response;
+  }
+
+  @PostMapping("/signin")
+  public ResponseEntity<?> signIn(@RequestBody SigninRequestDto dto, HttpServletResponse response) {
+    ResponseEntity<?> signResponse = authService.login(dto, response);
+    return signResponse;
   }
 }
