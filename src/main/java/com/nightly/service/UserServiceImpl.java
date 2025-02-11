@@ -32,18 +32,24 @@ public class UserServiceImpl implements UserService {
                              .collect(Collectors.toList());
     }
 
-    // 프로필 수정 정보 : 프로필 이미지, 닉네임, 전화번호, 자기 소개
+    // 프로필 수정 정보 : 프로필 이미지, 닉네임, 비밀번호, 전화번호, 자기 소개
     @Override
     public UserResponseDto updateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
-        user.setProfileImage(dto.getProfileImage());
-        user.setNickname(dto.getNickname());
-        user.setPhone(dto.getPhone());
-        user.setContent(dto.getContent());
-        return UserResponseDto.fromEntity(userRepository.save(user));
+        
+        // 비밀번호 검증
+        if (!user.getPassword().equals(dto.getCurrentPassword())) return null;
+        
+        
+        // 비밀번호 미변경 시  
+        if (dto.getChangePassword() == null) {
+        	dto.setChangePassword(dto.getCurrentPassword());
+        }
+
+        return UserResponseDto.fromEntity(userRepository.save(UserRequestDto.toEntity(user, dto)));
     }
 
-    // 계정 활성화
+    // 계정 활성화 -> 로그인 시 확인 후 계정 활성화 요청
     @Override
     public UserResponseDto activateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
@@ -56,6 +62,7 @@ public class UserServiceImpl implements UserService {
     public void inactivateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
         user.setStatus("INACTIVE");
+        userRepository.save(user);
     }
     
     // 계정 삭제
