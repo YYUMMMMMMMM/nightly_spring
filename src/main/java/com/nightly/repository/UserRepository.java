@@ -1,6 +1,9 @@
 package com.nightly.repository;
 
+import java.util.List;
+
 import com.nightly.entity.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -21,4 +24,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
   // 비밀번호 재설정
   Optional<User> findOptionalByEmail(String email);
+
+  // 유저 목록 조회
+  List<User> findByNickname(String nickname);
 }

@@ -2,6 +2,8 @@ package com.nightly.dto;
 
 import java.time.LocalDateTime;
 
+import com.nightly.entity.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,4 +32,22 @@ public class UserDto {
   private String status;
 
   private String content;
+
+  public static UserDto fromEntity(User entity) {
+    return UserDto.builder()
+                  .email(entity.getEmail())
+                  .password(entity.getPassword())
+                  .name(entity.getName())
+                  .nickname(entity.getNickname())
+                  .phone(entity.getPhone())
+                  .profileImage(entity.getProfileImage())
+                  .role(entity.getRole())
+                  .signupTime(entity.getSignupTime())
+                  .updateTime(entity.getUpdateTime())
+                  .followingCount(entity.getFollowingCount())
+                  .followerCount(entity.getFollowerCount())
+                  .status(entity.getStatus())
+                  .content(entity.getContent())
+                  .build();
+  }
 }
