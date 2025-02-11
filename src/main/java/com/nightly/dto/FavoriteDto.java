@@ -12,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoriteDto {
-    private UserDto user;
+    private UserRequestDto user;
     private BoardDto board;
 }

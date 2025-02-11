@@ -23,5 +23,5 @@ public class BoardDto {
     private int replyCount;
     private int viewCount;
 
-    private UserDto user;
+    private UserRequestDto user;
 }

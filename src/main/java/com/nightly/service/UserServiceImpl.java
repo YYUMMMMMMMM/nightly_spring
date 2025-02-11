@@ -5,7 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.nightly.dto.UserDto;
+import com.nightly.dto.UserRequestDto;
+import com.nightly.dto.UserResponseDto;
 import com.nightly.entity.User;
 import com.nightly.repository.UserRepository;
 
@@ -19,39 +20,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUser(String userEmail) {
-        return UserDto.fromEntity(userRepository.findByEmail(userEmail));
+    public UserResponseDto getUser(String userEmail) {
+        return UserResponseDto.fromEntity(userRepository.findByEmail(userEmail));
     }
 
     @Override
-    public List<UserDto> getUserList(String nickname) {
-        return userRepository.findByNickname(nickname)
+    public List<UserResponseDto> getUserList(String nickname) {
+        return userRepository.findByNicknameStartingWith(nickname)
                              .stream()
-                             .map(UserDto::fromEntity)
+                             .map(UserResponseDto::fromEntity)
                              .collect(Collectors.toList());
     }
 
-    // 프로필 수정 정보 : 프로필 이미지, 닉네임, 전화번호
+    // 프로필 수정 정보 : 프로필 이미지, 닉네임, 전화번호, 자기 소개
     @Override
-    public UserDto updateUser(UserDto dto) {
+    public UserResponseDto updateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
         user.setProfileImage(dto.getProfileImage());
         user.setNickname(dto.getNickname());
         user.setPhone(dto.getPhone());
-        return UserDto.fromEntity(userRepository.save(user));
+        user.setContent(dto.getContent());
+        return UserResponseDto.fromEntity(userRepository.save(user));
     }
 
     // 계정 활성화
     @Override
-    public UserDto activateUser(UserDto dto) {
+    public UserResponseDto activateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
         user.setStatus("ACTIVE");
-        return UserDto.fromEntity(userRepository.save(user));
+        return UserResponseDto.fromEntity(userRepository.save(user));
     }
 
     // 계정 비활성화
     @Override
-    public void inactivateUser(UserDto dto) {
+    public void inactivateUser(UserRequestDto dto) {
         User user = userRepository.findByEmail(dto.getEmail());
         user.setStatus("INACTIVE");
     }
