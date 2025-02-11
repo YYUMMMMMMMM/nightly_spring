@@ -1,10 +1,17 @@
 package com.nightly.entity;
 
-import com.nightly.dto.SignupRequestDto;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
+
+import com.nightly.dto.SignupRequestDto;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -19,16 +26,17 @@ public class User {
   private String name;
   private String nickname;
   private String phone;
-  private String roadAddress;
-  private String detailAddress;
+
   private String profileImage;
   private String role;
   private LocalDateTime signupTime;
   private LocalDateTime updateTime;
   private int followingCount;
   private int followerCount;
-  private Boolean termsAgreement;
   private String status;
+
+  @Column(columnDefinition = "text")
+  private String content;
 
   // toEntity
   public static User signUpToEntity(SignupRequestDto dto) {
@@ -38,16 +46,14 @@ public class User {
         .name(dto.getName())
         .nickname(dto.getNickname() != null ? dto.getNickname() : dto.getName())
         .phone(dto.getPhone())
-        .roadAddress(dto.getRoadAddress())
-        .detailAddress(dto.getDetailAddress())
         .profileImage(dto.getProfileImage())
         .role(dto.getRole())
         .signupTime(dto.getSignupTime())
         .updateTime(dto.getUpdateTime())
         .followingCount(dto.getFollowingCount())
         .followerCount(dto.getFollowerCount())
-        .termsAgreement(dto.getTermsAgreement())
         .status(dto.getStatus())
+       .content(dto.getContent())
         .build();
   }
 }
