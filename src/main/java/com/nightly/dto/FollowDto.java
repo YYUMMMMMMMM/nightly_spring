@@ -14,8 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FollowDto {
-    private UserDto follower;
-    private UserDto following;
+    private UserRequestDto follower;
+    private UserRequestDto following;
 
     private LocalDateTime followTime;
 }

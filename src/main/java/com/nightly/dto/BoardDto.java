@@ -1,7 +1,8 @@
 package com.nightly.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.*;
-import java.util.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,5 +23,5 @@ public class BoardDto {
     private int replyCount;
     private int viewCount;
 
-    private UserDto user;
+    private UserRequestDto user;
 }

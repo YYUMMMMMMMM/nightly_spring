@@ -114,6 +114,7 @@ public class AuthServiceImpl implements AuthService {
       Map<String, String> tokens = new HashMap<>();
       tokens.put("accessToken", accessToken);
       tokens.put("refreshToken", refreshToken);
+      tokens.put("email", email); // 사용자 메일 주소를 함께 반환 (250212 EaseHee)
       System.out.println("tokens : " + tokens);
 
       return ResponseEntity.status(HttpStatus.OK).body(tokens);

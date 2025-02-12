@@ -20,6 +20,6 @@ public class ReplyDto {
     private LocalDateTime writeTime;
     private LocalDateTime updateTime;
 
-    private UserDto user;
+    private UserRequestDto user;
     private BoardDto board;
 }
