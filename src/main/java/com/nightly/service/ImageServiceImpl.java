@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -48,6 +50,7 @@ public class ImageServiceImpl implements ImageService {
         }
      * @throws IOException
      */
+    @Override
     public Map uploadImage(MultipartFile file) throws IOException {
     	if (file.isEmpty()) {
     		throw new IllegalArgumentException();
@@ -58,13 +61,31 @@ public class ImageServiceImpl implements ImageService {
         return uploadResult;
     }
 
+    
     /**
      * 이미지 삭제 처리 메서드
      * @param publicId : 이미지 업로드(저장) 시 Cloudinary 서버에 저장된 이미지의 고유 ID -> 삭제 시 활용
      * @return : 삭제 성공 시 {"result":"ok"} 반환
      * @throws IOException
      */
+    @Override
     public Map deleteImage(String publicId) throws IOException {
     	return cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+    }
+
+    /**
+     * Cloudinary URL로 Public ID 반환 로직
+     * 정규 표현식을 이용하여 경로 말단의 ID를 추출
+     */
+    @Override
+    public String getPublicIdFromCloudinaryUrl(String url) {
+        String regex = ".*/upload/(?:v\\d+/)?([^\\.]+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            return matcher.group(1); // Public ID 반환
+        }
+        return null; // 매칭 실패 시
     }
 }

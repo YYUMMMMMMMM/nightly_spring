@@ -11,4 +11,7 @@ public interface ImageService {
     
     // 이미지 삭제
     Map deleteImage(String publicId) throws IOException;
+    
+    // Cloudinary URL -> Public ID 추출
+    String getPublicIdFromCloudinaryUrl(String url);
 }
