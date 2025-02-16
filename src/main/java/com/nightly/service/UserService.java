@@ -2,6 +2,8 @@ package com.nightly.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.nightly.dto.UserRequestDto;
 import com.nightly.dto.UserResponseDto;
 
@@ -13,7 +15,7 @@ public interface UserService {
     List<UserResponseDto> getUserList(String nickname);
 
     // 유저 정보 수정
-    UserResponseDto updateUser(UserRequestDto dto);
+    UserResponseDto updateUser(UserRequestDto dto, MultipartFile file);
 
     // 계정 활성화
     UserResponseDto activateUser(UserRequestDto dto);

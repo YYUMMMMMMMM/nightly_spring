@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nightly.dto.UserRequestDto;
 import com.nightly.dto.UserResponseDto;
@@ -35,8 +37,12 @@ public class ProfileController {
     }
     
     @PutMapping
-    public ResponseEntity<Object> updateUser(UserRequestDto dto) {
-    	UserResponseDto user = userService.updateUser(dto);
+    public ResponseEntity<Object> updateUser(
+    		@RequestPart("data") UserRequestDto dto, 
+    		@RequestPart(value = "imageFile", required = false) MultipartFile file
+	) {
+    	log.info("[{}] UpdatedUser : {}", getClass().getSimpleName(), dto);
+    	UserResponseDto user = userService.updateUser(dto, file);
         if (user == null) {
             return ResponseEntity.badRequest().body("비밀번호 오류");
         }
